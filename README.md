@@ -1,0 +1,2 @@
+# MathWebApp
+This Web App was designed with all the core operations that children need to know in elementary school. Each number is generated randomly and the functions will check if correct or incorrect. Based on response a correct or incorrect gif will appear to let the user know. The user can then enter their username to save their score or hit cancel, this will take them straight to the leaderboard screen to see all the past users and scores. The scores are sorted by descending order within the DB. 
