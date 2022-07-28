@@ -1,0 +1,42 @@
+﻿@page "/update/{id:int}"
+@using MathGameCRUD.Data
+
+<h1>Update Post "@_postToUpdate.userName"</h1>
+
+<EditForm Model="_postToUpdate" OnValidSubmit="UpdatePost">
+    <div class="form-group mb-3">
+        <label for="postTitle">Title</label>
+        <InputText @bind-Value="_postToUpdate.userName" class=form-control id="postuserName" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="postscore">score</label>
+        <InputNumber @bind-Value="_postToUpdate.score" class=form-control id="postscore" />
+    </div>
+
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <button class="btn btn-success" type="submit">Save</button>
+    <button @onclick="@(() => NavigationManager.NavigateTo("/"))" class="btn btn-secondary">Cancel</button>
+</EditForm>
+
+@code {
+    [Inject] AppDBContext AppDBContext { get; set; }
+    [Inject] NavigationManager NavigationManager { get; set; }
+    [Parameter] public int id { get; set; }
+
+    private Post _postToUpdate = null;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _postToUpdate = await AppDBContext.Posts.FindAsync(id);
+    }
+
+    private async Task UpdatePost()
+    {
+        AppDBContext.Posts.Update(_postToUpdate);
+        await AppDBContext.SaveChangesAsync();
+        NavigationManager.NavigateTo("/");
+    }
+}

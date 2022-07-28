@@ -1,0 +1,160 @@
+﻿h3 {
+    position: relative;
+    text-align: center;
+    margin-top: 10px;
+}
+
+p {
+    font-size: 20px;
+    position: relative;
+    text-align: center;
+}
+
+h4 {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+input {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.button-space {
+    display: flex;
+    align-content: stretch;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    flex-direction: column;
+}
+
+div.form-group.mb-3 {
+    display: flex;
+    width: 25%;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 20px;
+}
+
+img {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 10px;
+}
+
+button.btn.btn-success {
+    margin-bottom: 10px;
+}
+
+nav {
+    position: relative;
+    margin: auto;
+    width: 80%;
+    background-color: #198754;
+    border-radius: 10px;
+    font-size: 0;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
+}
+
+    nav a {
+        font-size: 15px;
+        text-transform: uppercase;
+        color: white;
+        text-decoration: none;
+        line-height: 50px;
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+        text-align: center;
+    }
+
+    nav .animation {
+        position: absolute;
+        height: 100%;
+        top: 0;
+        z-index: 0;
+        background: #6c757d;
+        border-radius: 8px;
+        transition: all .5s ease 0s;
+    }
+
+a:nth-child(1) {
+    width: 12.5%;
+}
+
+    nav .start-lamborgini, a:nth-child(1):hover ~ .animation {
+        width: 12.5%;
+        left: 0;
+    }
+
+a:nth-child(2) {
+    width: 12.5%;
+}
+
+    nav .start-ferrari, a:nth-child(2):hover ~ .animation {
+        width: 12.5%;
+        left: 12.5%;
+    }
+
+a:nth-child(3) {
+    width: 12.5%;
+}
+
+    nav .start-lamborgini, a:nth-child(3):hover ~ .animation {
+        width: 12.5%;
+        left: 25%;
+    }
+
+a:nth-child(4) {
+    width: 12.5%;
+}
+
+    nav .start-ferrari, a:nth-child(4):hover ~ .animation {
+        width: 12.5%;
+        left: 37.5%;
+    }
+
+a:nth-child(5) {
+    width: 12.5%;
+}
+
+    nav .start-lamborgini, a:nth-child(5):hover ~ .animation {
+        width: 12.5%;
+        left: 50%;
+    }
+
+a:nth-child(6) {
+    width: 12.5%;
+}
+
+    nav .start-ferrari, a:nth-child(6):hover ~ .animation {
+        width: 12.5%;
+        left: 62.5%;
+    }
+
+a:nth-child(7) {
+    width: 12.5%;
+}
+
+    nav .start-lamborgini, a:nth-child(7):hover ~ .animation {
+        width: 12.5%;
+        left: 75%;
+    }
+
+a:nth-child(8) {
+    width: 12.5%;
+}
+
+    nav .start-ferrari, a:nth-child(8):hover ~ .animation {
+        width: 12.5%;
+        left: 87.5%;
+    }
+
+

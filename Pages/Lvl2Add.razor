@@ -1,0 +1,194 @@
+﻿@using MathGameCRUD.Data
+@using Microsoft.EntityFrameworkCore
+@using System.Threading.Tasks;
+@using System.Timers;
+@layout EmptyLayout
+@page "/level2add"
+
+<a href="home">
+    <img src="/Images/homePic.png"/>
+</a>
+
+<nav> 
+		<a  href ="level1multiplication"> One Digit Multiplication </a> 
+		<a  href="level2multiplication"> Two Digit Multiplication </a> 
+        <a  href="level1division"> One Digit Division </a> 
+        <a  href="level2division"> Two Digit Division </a> 
+        <a  href="level1add"> One Digit Addition </a> 
+        <a  href="level2add"> Two Digit Addition </a> 
+        <a  href="level1sub"> One Digit Subtraction </a> 
+        <a  href="level2sub"> Two Digit Subtraction </a> 
+		
+		<div class="animation start-home"></div>
+		
+</nav>
+
+<h3>Level 2 Addition</h3>
+
+
+
+<p>How much is @randomnumber.int1 + @randomnumber.int2 </p>
+
+<input type="number" @bind-value=@randomnumber.Answer placeholder="Answer"/>
+
+<p></p>
+
+<img src="@stringAnswer" width="300"/>
+
+
+<h4> Your score is @randomnumber.Score</h4>
+
+@*<h5> Time is @count</h5>*@
+
+<div class="button-space">
+
+    <button class="btn btn-success" @onclick="ValidateAnswer">Check</button>
+
+
+
+<button class="btn btn-success" @onclick=RandomInt2Digit>Next</button>
+
+
+</div>
+
+
+<EditForm Model="_postToCreate" OnValidSubmit="CreatePost">
+    <div class="form-group mb-3">
+        <label for="postuserName">User Name</label>
+        <InputText @bind-Value="_postToCreate.userName" class=form-control id="postuserName" />
+        
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="postscore">Score</label>
+        <InputNumber @bind-Value="_postToCreate.score" class=form-control id="postscore" readonly/>
+        
+        
+    </div>
+
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+
+    <div class="button-space">
+        <button class="btn btn-success" type="submit">Save</button>
+        <button @onclick="@(() => NavigationManager.NavigateTo("/leaderboard"))" class="btn btn-secondary">Cancel</button>
+    </div>
+    
+
+
+</EditForm>
+
+@code {
+    //PeriodicTimer timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+    //int count = 1;
+    //while (await timer.WaitForNextTickAsync())
+    //{
+    //    count++;
+    //}
+
+    [Inject] AppDBContext AppDBContext { get; set; }
+    [Inject] NavigationManager NavigationManager { get; set; }
+
+
+
+    private async Task CreatePost()
+    {
+        await AppDBContext.Posts.AddAsync(_postToCreate);
+        await AppDBContext.SaveChangesAsync();
+        NavigationManager.NavigateTo("/leaderboard");
+    }
+
+
+    string stringAnswer = "";
+
+
+    private List<Post> _posts = new List<Post>();
+
+    randomNumber randomnumber = new randomNumber();
+
+     List<string> correctReplies = new List<string>
+        {
+            "Images/correctanswer1.gif", "Images/correctanswer2.gif", "Images/correctanswer3.gif"
+        };
+
+    List<string> incorrectReplies = new List<string>
+        {
+            "Images/incorrectanswer1.gif", "Images/incorrectanswer2.gif", "Images/incorrectanswer3.gif"
+        };
+
+    Random r = new Random();
+
+    public class randomNumber
+    {
+        public int Product { get; set; }
+
+        public int int1 { get; set; }
+
+        public int int2 { get; set; }
+
+        public int Answer { get; set; }
+
+        public int Index { get; set; }
+
+        public int Score { get; set; }
+
+    }
+
+    private Post _postToCreate = new Post
+    {
+        userName = "",
+        score = 0
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        _posts = await AppDBContext.Posts.ToListAsync();
+
+        await RandomInt2Digit();
+    }
+
+
+
+    private async Task RandomInt2Digit()
+    {
+
+        randomnumber.int1 = r.Next(0, 100);
+
+        randomnumber.int2 = r.Next(0, 100);
+
+        randomnumber.Answer = 0;
+
+        stringAnswer = "";
+
+        randomnumber.Index = r.Next(correctReplies.Count);
+
+        randomnumber.Index = r.Next(incorrectReplies.Count);
+
+    }
+
+    private async Task ValidateAnswer()
+    {
+        Int32 actualAnswer = randomnumber.int1 + randomnumber.int2;
+
+        if(randomnumber.Answer == actualAnswer)
+        {
+            stringAnswer = correctReplies[randomnumber.Index];
+            randomnumber.Score += 3;
+            _postToCreate.score = randomnumber.Score;
+        }
+        else
+        {
+            stringAnswer = incorrectReplies[randomnumber.Index];
+        }
+    }
+
+
+
+    
+
+    
+
+
+}

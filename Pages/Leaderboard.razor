@@ -1,0 +1,78 @@
+﻿@page "/leaderboard"
+@using MathGameCRUD.Data
+@layout EmptyLayout
+@using Microsoft.EntityFrameworkCore
+@using System;
+@using System.Linq;
+@using System.Collections.Generic;
+
+<h1>Leader Board</h1>
+
+<a href="home">
+    <img src="/Images/homePic.png"/>
+</a>
+
+<table class="table-sortable">
+
+    <thead>
+        <tr>
+            
+            <th scope="col">Name</th>
+            <th scope="col">Score</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @if (_posts != null)
+        {
+            foreach (var post in _posts.OrderByDescending(x => x.score).ToList())
+            {
+
+            
+
+                <tr>
+                    
+                    <td >@post.userName</td>
+                    <td >@post.score</td>
+                  
+                </tr>
+            }
+        }
+
+        
+    </tbody>
+</table>
+
+
+
+
+
+@code{
+    [Inject] AppDBContext AppDBContext { get; set; }
+
+    
+
+    private List<Post> _posts = new List<Post>();
+
+    //private List<NewPost> newPosts = new List<NewPost>();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        _posts = await AppDBContext.Posts.ToListAsync();
+
+        
+    }
+
+    //private async Task Sort()
+    //{
+    //    var sortedList = _posts.OrderByDescending(x => x.userName).ThenBy(x => x.score).ToList();
+
+    //    newPosts = sortedList;
+    //}
+
+    
+
+
+}
